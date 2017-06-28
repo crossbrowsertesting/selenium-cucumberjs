@@ -1,6 +1,7 @@
 var webdriver = require('selenium-webdriver');
 var {defineSupportCode} = require('cucumber');
 var assert = require('assert');
+
 defineSupportCode(function({Given, When, Then}) {
   Given('I visit a ToDo app', function() {
     return this.driver.get('http://crossbrowsertesting.github.io/todo-app.html');
