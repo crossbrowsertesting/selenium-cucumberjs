@@ -1,7 +1,7 @@
 var webdriver = require('selenium-webdriver');
 var {defineSupportCode} = require('cucumber');
 global.username = 'chase@crossbrowsertesting.com';
-global.authkey = 'selenium';
+global.authkey = 'notmyauthkey';
 function CBTWorld() {
   var remoteHub = 'http://hub.crossbrowsertesting.com:80/wd/hub';
   var caps = {
