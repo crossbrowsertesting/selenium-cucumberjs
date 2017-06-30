@@ -41,7 +41,7 @@ defineSupportCode(function({setWorldConstructor}) {
 
 As you can see, we're now pointing the test at our hub rather than a local driver instance. 
 
-If you're new to WebDriverIO, we'll walk you through getting setup the first time around. First we need to get WebDriverIO installed. You can do this through NPM:
+If you're new to CucumberJS, we'll walk you through getting setup the first time around. First we need to get Cucumber installed. You can do this through NPM:
 
 `npm install cucumber --save`
 
@@ -52,83 +52,37 @@ We're also going to install Javascript's [Request](https://github.com/request/re
 Before starting any tests, you can configure WebDriverIO to use testing frameworks like [Chai](http://chaijs.com/) or [Mocha](https://mochajs.org/), and you can [read more on that here](http://webdriver.io/guide/getstarted/configuration.html). For our purposes, we'll start by writing our first test with CBT. Copy the following script into your favorite text-editor, and make sure to change the username and authkey values to those associated with your account:
 
 ```javascript
-var webdriverio = require('webdriverio');
-var request = require('request');
 
-var username = 'you@yourdomain.com'; 			// the email address associated with your account
-var authkey = 'yourauthkey';					// can be found on the "Manage Account" page of our app
-var options = {
-  desiredCapabilities: {
-    name: 'Selenium Test Example',
-    build: '1.0',
-    browser_api_name: "FF45",
-    os_api_name: "Win10",
-    browserName: 'firefox',
-    record_video: 'true',
-    record_network: 'true'
-  },
-  host: "hub.crossbrowsertesting.com",
-  port: 80,
-  user: username,
-  key: authkey      
-}
+var webdriver = require('selenium-webdriver');
+var {defineSupportCode} = require('cucumber');
+var assert = require('assert');
 
-var sessionId;
+defineSupportCode(function({Given, When, Then}) {
+  Given('I visit a ToDo app', function() {
+    return this.driver.get('http://crossbrowsertesting.github.io/todo-app.html');
+  });
 
-//Call API to set the score
-function setScore(score) {
+  When('I click some ToDos', function () {
+    this.driver.findElement(webdriver.By.name("todo-4")).click();
+    return this.driver.findElement(webdriver.By.name("todo-5")).click();
+  });
 
-    var result = { error: false, message: null }
+  Then('I add another ToDo to our list', function () {
+    this.driver.findElement(webdriver.By.id("todotext")).sendKeys("Run your first Selenium Test");
+    return this.driver.findElement(webdriver.By.id("addbutton")).click();
+  });
 
-    if (sessionId){
-        
-        request({
-            method: 'PUT',
-            uri: 'https://crossbrowsertesting.com/api/v3/selenium/' + sessionId,
-            body: {'action': 'set_score', 'score': score },
-            json: true
-        },
-        function(error, response, body) {
-            if (error) {
-                result.error = true;
-                result.message = error;
-            }
-            else if (response.statusCode !== 200){
-                result.error = true;
-                result.message = body;
-            }
-            else{
-                result.error = false;
-                result.message = 'success';
-            }
+  When('I archive my old ToDos', function() {
+    return this.driver.findElement(webdriver.By.linkText("archive")).click()
+  });
 
-        })
-        .auth(username, authkey);
-    }
-    else{
-        result.error = true;
-        result.message = 'Session Id was not defined';
-    }
-
-}
-
-// create your webdriverio.remote with your options as an argument
-var client = webdriverio.remote(options);
-
-client
-    .init()
-    .then(function() {
-      sessionId = client.requestHandler.sessionID;
-    })
-    .url('http://www.google.com')
-    .getTitle().then(function(title) {
-        if (title === 'Google') {
-          setScore('pass');
-        } else {
-          setScore('fail');
-        }
-    })
-    .end();
+  Then('I should have 4 ToDos', function() {
+    return this.driver.findElements(webdriver.By.className('ng-pristine ng-untouched ng-valid'))
+      .then(function(elems) {
+        assert.equal(elems.length, 4);
+    });
+  });
+});
 
 ```
 
