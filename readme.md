@@ -2,9 +2,14 @@
 
 Want a powerful and easy to use command line tool for running Selenium-JS tests? [CucumberJS](https://github.com/cucumber/cucumber-js) might be the option for you. CucumberJS provides language-bindings for the powerful browser-driving tool [Selenium](http://www.seleniumhq.org/docs/). Its test runner allows you to write your tests in a way that can be easily read by anyone on your team, by using [Gherkin](https://cucumber.io/docs/reference). CucumberJS integrates easily with the CrossBrowserTesting platform, so you can perform tests on a wide variety of OS/Device/Browser combinations, all from one test. Let's walk through getting setup.
 
-If you're already a WebDriverIO user, you can quickly change your current tests by doing the following:
+The easiest way to get started is to simply clone this repository and perform the following command in this repository:
+
+```
+npm install
+```
 
 ```javascript
+
 var webdriver = require('selenium-webdriver');
 var {defineSupportCode} = require('cucumber');
 global.username = 'chase@crossbrowsertesting.com';
@@ -49,7 +54,7 @@ We're also going to install Javascript's [Request](https://github.com/request/re
 
 `npm install request --save`
 
-Before starting any tests, you can configure WebDriverIO to use testing frameworks like [Chai](http://chaijs.com/) or [Mocha](https://mochajs.org/), and you can [read more on that here](http://webdriver.io/guide/getstarted/configuration.html). For our purposes, we'll start by writing our first test with CBT. Copy the following script into your favorite text-editor, and make sure to change the username and authkey values to those associated with your account:
+Before starting any tests, you can configure Cucumber to use testing frameworks like [Chai](http://chaijs.com/) or [Mocha](https://mochajs.org/), and you can [read more on that here](http://webdriver.io/guide/getstarted/configuration.html). For our purposes, we'll start by writing our first test with CBT. Copy the following script into your favorite text-editor, and make sure to change the username and authkey values to those associated with your account:
 
 ```javascript
 
