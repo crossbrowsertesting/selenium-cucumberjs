@@ -91,4 +91,4 @@ defineSupportCode(function({Given, When, Then}) {
 
 ```
 
-As you can probably make out from our test, we visit Google, and output the title we see. If the title is correct (hopefully Google hasn't changed names on us), then we'll set the score to pass. We kept it short and sweet for our purposes, but there is so much more you can do with CucumerJS. Being built on top of Selenium means the sky is the limit as far as what you can do. If you have any questions or concerns, feel [free to get in touch](mailto:info@crossbrowsertesting.com)!
+As you can probably make out from our test, we visit a ToDo App example, interact with our page, and verify that the changes we've made are actually reflected. If all goes well, then we'll set the score to pass using CBT's API. We kept it short and sweet for our purposes, but there is so much more you can do with CucumberJS. Being built on top of Selenium means the sky is the limit as far as what you can do. If you have any questions or concerns, feel [free to get in touch](mailto:info@crossbrowsertesting.com)!
