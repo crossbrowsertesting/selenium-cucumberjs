@@ -8,11 +8,10 @@ function CBTWorld() {
     name : 'Basic Example',
     build :  '1.0',
     browser_api_name : 'Chrome56x64', 
-    os_api_name : 'Win7x64-C1', 
-    screen_resolution : '1366x768',
+    browserName : 'Chrome', // Pulls latest version of Chrome by default
+    platform : 'Windows 7', // To specify version, add version : 'desired version'
     record_video : 'true',
     record_network : 'true',
-    browserName : 'chrome', // <---- this needs to be the browser type in lower case: firefox, internet explorer, chrome, opera, or safari
     username : global.username,
     password : global.authkey
   };
