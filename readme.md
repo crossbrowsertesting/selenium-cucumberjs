@@ -31,7 +31,7 @@ function CBTWorld() {
     browserName : 'Chrome', // Pulls latest version of Chrome by default
     platform : 'Windows 7', // To specify version, add version : 'desired version'
     screen_resolution : '1366x768',
-    record_video : 'true',
+    record_video : 'false',
     record_network : 'true',
     username : global.username,
     password : global.authkey
