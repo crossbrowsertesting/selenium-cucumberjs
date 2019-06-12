@@ -32,11 +32,11 @@ function CBTWorld() {
     platform : 'Windows 7', // To specify version, add version : 'desired version'
     screen_resolution : '1366x768',
     record_video : 'false',
-    record_network : 'true',
+    record_network : 'false',
     username : global.username,
     password : global.authkey
   };
-  
+
   this.driver = new webdriver.Builder()
     .usingServer(remoteHub)
     .withCapabilities(caps)
@@ -102,6 +102,6 @@ defineSupportCode(function({Given, When, Then}) {
 
 ```
 
-As you can probably make out from our test, we visit a small ToDo App example, interact with our page, and use assertions to verify that the changes we've made are actually reflected in our app. If all goes well, then we'll set the score to pass using CBT's API. 
+As you can probably make out from our test, we visit a small ToDo App example, interact with our page, and use assertions to verify that the changes we've made are actually reflected in our app. If all goes well, then we'll set the score to pass using CBT's API.
 
 We kept it short and sweet for our purposes, but there is so much more you can do with CucumberJS! Being built on top of Selenium means the sky is the limit as far as what you can do. If you have any questions or concerns, feel [free to get in touch](mailto:info@crossbrowsertesting.com).
