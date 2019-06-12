@@ -7,15 +7,15 @@ function CBTWorld() {
   var caps = {
     name : 'Basic Example',
     build :  '1.0',
-    browser_api_name : 'Chrome56x64', 
+    browser_api_name : 'Chrome56x64',
     browserName : 'Chrome', // Pulls latest version of Chrome by default
     platform : 'Windows 7', // To specify version, add version : 'desired version'
     record_video : 'true',
-    record_network : 'true',
+    record_network : 'false',
     username : global.username,
     password : global.authkey
   };
-  
+
   this.driver = new webdriver.Builder()
     .usingServer(remoteHub)
     .withCapabilities(caps)
