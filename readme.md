@@ -1,6 +1,6 @@
 # Getting Started with CucumberJS and CrossBrowserTesting #
 
-Want a powerful and easy to use command line tool for running Selenium-JS tests? [CucumberJS](https://github.com/cucumber/cucumber-js) might be the option for you. CucumberJS provides language-bindings for the powerful browser-driving tool [Selenium](http://www.seleniumhq.org/docs/). It's [Gherkin](https://cucumber.io/docs/reference) language allows you to write your tests in a way that can be easily read by anyone on your team. CucumberJS integrates easily with the CrossBrowserTesting platform, so you can perform tests on a wide variety of OS/Device/Browser combinations, all from one test. Let's walk through getting setup.
+Want a powerful and easy to use command line tool for running Selenium-JS tests? [CucumberJS](https://github.com/cucumber/cucumber-js) might be the option for you. CucumberJS provides language-bindings for the powerful browser-driving tool [Selenium](http://www.seleniumhq.org/docs/). It's [Gherkin](https://cucumber.io/docs/gherkin/) language allows you to write your tests in a way that can be easily read by anyone on your team. CucumberJS integrates easily with the CrossBrowserTesting platform, so you can perform tests on a wide variety of OS/Device/Browser combinations, all from one test. Let's walk through getting setup.
 
 The easiest way to get started is to simply clone this repository and perform the following command in this repository:
 
