@@ -10,9 +10,9 @@ npm install
 
 However, if you're new to CucumberJS, we'll walk you through getting setup the first time around. First we need to create a new folder, initialize your project, and get Cucumber and Selenium installed. You can do this through NPM:
 
-`npm init --yes`
-`npm install cucumber --save-dev`
-`npm install selenium-webdriver --save-dev`
+```npm init --yes```</br>
+```npm install cucumber --save-dev```</br>
+```npm install selenium-webdriver --save-dev```</br>
 
 We're also going to install Javascript's [Request](https://github.com/request/request) module, so we can make Restful API calls to set the score for our test once we're finished. We can also do this with NPM:
 
