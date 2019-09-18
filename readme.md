@@ -8,31 +8,34 @@ The easiest way to get started is to simply clone this repository and perform th
 npm install
 ```
 
-However, if you're new to CucumberJS, we'll walk you through getting setup the first time around. First we need to get Cucumber installed. You can do this through NPM:
+However, if you're new to CucumberJS, we'll walk you through getting setup the first time around. First we need to create a new folder, initialize your project, and get Cucumber and Selenium installed. You can do this through NPM:
 
-`npm install cucumber --save`
+`npm init --yes`
+`npm install cucumber --save-dev`
+`npm install selenium-webdriver --save-dev`
 
 We're also going to install Javascript's [Request](https://github.com/request/request) module, so we can make Restful API calls to set the score for our test once we're finished. We can also do this with NPM:
 
-`npm install request --save`
+`npm install request --save-dev`
 
-Before starting any tests, you can configure Cucumber to use testing frameworks like [Chai](http://chaijs.com/) or [Mocha](https://mochajs.org/), and you can [read more on that here](http://webdriver.io/guide/getstarted/configuration.html). For the purpose of this introduction, we'll dive right into getting connected with CBT. We'll need to create a file called world.js that defines our connection to the remote hub:
+Before starting any tests, you can configure Cucumber to use testing frameworks like [Chai](http://chaijs.com/) or [Mocha](https://mochajs.org/), and you can [read more on that here](http://webdriver.io/guide/getstarted/configuration.html). For the purpose of this introduction, we'll dive right into getting connected with CBT. We'll need to create a new file step_definitions/world.js that defines our connection to the remote hub:
 
 ```javascript
 var webdriver = require('selenium-webdriver');
-var {defineSupportCode} = require('cucumber');
-global.username = 'chase@crossbrowsertesting.com';
-global.authkey = 'notmyauthkey';
+var{setWorldConstructor} = require('cucumber');
+var{setDefaultTimeout}=require('cucumber');
+
+global.username = 'YOUR_USERNAME';
+global.authkey = 'YOUR_AUTHKEY';
 function CBTWorld() {
   var remoteHub = 'http://hub.crossbrowsertesting.com:80/wd/hub';
   var caps = {
     name : 'Basic Example',
     build :  '1.0',
     browserName : 'Chrome', // Pulls latest version of Chrome by default
-    platform : 'Windows 7', // To specify version, add version : 'desired version'
+    platform : 'Windows 10', // To specify version, add version : 'desired version'
     screen_resolution : '1366x768',
-    record_video : 'false',
-    record_network : 'false',
+    record_video : 'true',
     username : global.username,
     password : global.authkey
   };
@@ -43,16 +46,12 @@ function CBTWorld() {
     .build();
 }
 
-defineSupportCode(function({setDefaultTimeout}) {
-	setDefaultTimeout(60 * 1000);
-})
+  setDefaultTimeout(60 * 1000);
+  setWorldConstructor(CBTWorld);
 
-defineSupportCode(function({setWorldConstructor}) {
-  setWorldConstructor(CBTWorld)
-})
 ```
 
-Be certain to change the username and authorization key above to those associated with your account. Now that we have that out of the way, we can put together our first script. We'll first need to create a feature file where our test steps are defined in the Gherkin language. Save the following as todo.feature:
+Be certain to change the username and authorization key above to those associated with your account. Now that we have that out of the way, we can put together our first script. We'll first need to create a feature file where our test steps are defined in the Gherkin language. Save the following as features/todo.feature:
 
 ```
 Feature: CBT Feature
@@ -65,15 +64,14 @@ Feature: CBT Feature
     Then I should have 4 ToDos
 ```
 
-Lastly, we need to define the procedural code. This will be the javascript that works with the Selenium language bindings to create the logic of our test. Save the following as browser_steps.js:
+Lastly, we need to define the procedural code. This will be the javascript that works with the Selenium language bindings to create the logic of our test. Save the following as step_definitions/browser_steps.js:
 
 ```javascript
 
 var webdriver = require('selenium-webdriver');
-var {defineSupportCode} = require('cucumber');
+var {Given, When, Then } = require('cucumber');
 var assert = require('assert');
 
-defineSupportCode(function({Given, When, Then}) {
   Given('I visit a ToDo app', function() {
     return this.driver.get('http://crossbrowsertesting.github.io/todo-app.html');
   });
@@ -97,11 +95,21 @@ defineSupportCode(function({Given, When, Then}) {
       .then(function(elems) {
         assert.equal(elems.length, 4);
     });
+  
   });
-});
 
 ```
+Save the following as step_definitions/hooks.js:
 
+```javascript
+var {After} = require('cucumber');
+
+
+  After(function() {
+    return this.driver.quit();
+  });
+
+```
 As you can probably make out from our test, we visit a small ToDo App example, interact with our page, and use assertions to verify that the changes we've made are actually reflected in our app. If all goes well, then we'll set the score to pass using CBT's API.
 
 We kept it short and sweet for our purposes, but there is so much more you can do with CucumberJS! Being built on top of Selenium means the sky is the limit as far as what you can do. If you have any questions or concerns, feel [free to get in touch](mailto:info@crossbrowsertesting.com).
