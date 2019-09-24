@@ -2,13 +2,7 @@
 
 Want a powerful and easy to use command line tool for running Selenium-JS tests? [CucumberJS](https://github.com/cucumber/cucumber-js) might be the option for you. CucumberJS provides language-bindings for the powerful browser-driving tool [Selenium](http://www.seleniumhq.org/docs/). It's [Gherkin](https://cucumber.io/docs/gherkin/) language allows you to write your tests in a way that can be easily read by anyone on your team. CucumberJS integrates easily with the CrossBrowserTesting platform, so you can perform tests on a wide variety of OS/Device/Browser combinations, all from one test. Let's walk through getting setup.
 
-The easiest way to get started is to simply clone this repository and perform the following command in this repository:
-
-```
-npm install
-```
-
-However, if you're new to CucumberJS, we'll walk you through getting setup the first time around. First we need to create a new folder, initialize your project, and get Cucumber and Selenium installed. You can do this through NPM:
+First we need to create a new folder, initialize your project, and get Cucumber and Selenium installed. You can do this through NPM:
 
 ```npm init --yes```</br>
 ```npm install cucumber --save-dev```</br>
@@ -56,12 +50,10 @@ Be certain to change the username and authorization key above to those associate
 ```
 Feature: CBT Feature
 
-  Scenario: Testing ToDos
-    Given I visit a ToDo app
-    When I click some ToDos
-    Then I add another ToDo to our list
-    When I archive my old ToDos
-    Then I should have 4 ToDos
+  Scenario: Adding ToDos
+    Given I go to my ToDo app
+    When I add a new ToDo
+    Then I should have 6 ToDos
 ```
 
 Lastly, we need to define the procedural code. This will be the javascript that works with the Selenium language bindings to create the logic of our test. Save the following as step_definitions/browser_steps.js:
@@ -72,28 +64,19 @@ var webdriver = require('selenium-webdriver');
 var {Given, When, Then } = require('cucumber');
 var assert = require('assert');
 
-  Given('I visit a ToDo app', function() {
+  Given('I go to my ToDo app', function() {
     return this.driver.get('http://crossbrowsertesting.github.io/todo-app.html');
   });
 
-  When('I click some ToDos', function () {
-    this.driver.findElement(webdriver.By.name("todo-4")).click();
-    return this.driver.findElement(webdriver.By.name("todo-5")).click();
-  });
-
-  Then('I add another ToDo to our list', function () {
+  When('I add a new ToDo', function () {
     this.driver.findElement(webdriver.By.id("todotext")).sendKeys("Run your first Selenium Test");
     return this.driver.findElement(webdriver.By.id("addbutton")).click();
   });
 
-  When('I archive my old ToDos', function() {
-    return this.driver.findElement(webdriver.By.linkText("archive")).click()
-  });
-
-  Then('I should have 4 ToDos', function() {
+  Then('I should have 6 ToDos', function() {
     return this.driver.findElements(webdriver.By.className('ng-pristine ng-untouched ng-valid'))
       .then(function(elems) {
-        assert.equal(elems.length, 4);
+        assert.equal(elems.length, 6);
     });
   
   });
@@ -106,7 +89,9 @@ var {After} = require('cucumber');
 
 
   After(function() {
-    return this.driver.quit();
+    if(this.driver !=null){
+      return this.driver.quit();
+    }
   });
 
 ```
