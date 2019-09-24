@@ -1,8 +1,5 @@
 Feature: CBT Feature
-
-  Scenario: Testing ToDos
-    Given I visit a ToDo app
-    When I click some ToDos
-    Then I add another ToDo to our list
-    When I archive my old ToDos
-    Then I should have 4 ToDos
+  Scenario: Adding ToDos
+  	Given I go to my ToDo APP
+  	When I add a new ToDo
+  	Then I should have 6 ToDos
